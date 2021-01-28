@@ -39,9 +39,27 @@ function Airplane(name) {
           + It should return a string with `name` and `age`. Example: "Mary, 50"
   */
   
- function Person() {
-    
+// create person constructor
+function Person(name, age){ //initializes `name` and `age` from arguments
+  this.name = name;
+  this.age = age;
+  this.stomach = []; //initializes with an empty `stomach` array
+}
+//Give instances of Person ability to .eat
+Person.prototype.eat = function(edible){ //pass in edible as an argument
+ //conditional: eating an edible pushes into the 'stomach' array, maxed at 10
+  if(this.stomach.length < 10){ //if <10 push into stomach
+    this.stomach.push(edible);
   }
+}
+//Give instances of Person the ability to poop 💩
+Person.prototype.poop = function(){
+  this.stomach = []; //When an instance poops, its `stomach` empties
+}
+//Give instances of Person a method .toString() that returns a string with `name` and `age`. Example: "Mary, 50"
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
+}
  
  
 
