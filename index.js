@@ -81,9 +81,33 @@ Person.prototype.toString = function(){
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
   
- function Car() {
-    
-  }
+ function Car(model, milesPerGallon) {
+  this.tank = 0;
+  this.odometer = 0;
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+}
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons; 
+}
+Car.prototype.drive = function(distance) {
+let range = (this.tank * this.milesPerGallon);
+if(range < distance){
+  this.odometer = this.odometer + range;
+  this.tank = 0;
+  return (`I ran out of fuel at ${this.odometer} miles!`);
+} else{
+  this.odometer = this.odometer + distance;
+  this.tank = this.tank - (distance / this.milesPerGallon);
+}	
+}
+
+const pri = new Car('prius', 50);
+
+pri.fill(1.5);
+console.log(pri.drive(100));
+
+
   
   
   /*
@@ -93,18 +117,25 @@ Person.prototype.toString = function(){
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
+ function Baby(name, age, favoriteToy) {
+   Person.call(this, name, age)
+   this.favoriteToy = favoriteToy;
+  }
+
+  Baby.prototype = Object.create(Person.prototype)
+
+  Baby.prototype.play = function(){
+    return (`Playing with ${this.favoriteToy}`);
   }
  
   
   /* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. Implicit Binding: You are inside a house. Where are you? This house. This = the house. (inside a function)
+    2. Window Binding: You go outside the garage. Where are you? The open world - but you're still inside the atmosphere. (Browser window - this is the default return if you use 'this' improperly)
+    3. Explicit Binding: You go inside the car INSIDE the garage. You are inside THIS car, which is inside the garage - you are EXPLICITLY stating where you are. It is similar to declaring a variable, but instead of let variable = value, you are saying this.variable = value.
+    4. You are inside the house using the oven to bake a cake. When the oven (a constructor function) is invoked to bake a cake (new object), 'this' refers to the new object.
   */
   
   
